@@ -1,10 +1,12 @@
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/index.tsx',
 
     output: {
         path: __dirname + '/public/',
         filename: 'bundle.js'
     },
+
+    devtool: 'source-map',
 
     devServer: {
         inline: true,
@@ -22,6 +24,15 @@ module.exports = {
                 }
             },
             {
+                test: /\.ts|tsx$/,
+                loader: "awesome-typescript-loader"
+            },
+            { 
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader",
+            },
+            {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"]
             },
@@ -37,6 +48,6 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: [".js", ".jsx"]
+        extensions: [".ts", ".tsx", ".js", ".jsx", ".json"]
     }
 };

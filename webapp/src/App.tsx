@@ -1,11 +1,19 @@
-import React, { Component } from 'react';
-import socketIOClient from 'socket.io-client';
+import * as React from 'react';
+import * as socketIOClient from 'socket.io-client';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Chance from 'chance';
+import * as Chance from 'chance';
 
-class App extends Component {
-  constructor() {
-    super();
+interface AppState {
+  endpoint: string,
+  messages: Array<any>,
+  chatInput: string,
+  user: any,
+}
+
+class App extends React.Component<{}, AppState> {
+  socket: any;
+  constructor(props: any) {
+    super(props);
     this.state = {
       endpoint: "http://192.168.219.161:4001",
       messages: [],
@@ -16,10 +24,10 @@ class App extends Component {
       },
     }
     this.socket = socketIOClient(this.state.endpoint);
-    this.socket.on('login', (name) => {
+    this.socket.on('login', (name: string) => {
       console.log(`${name} is logged in`);
     });
-    this.socket.on('chat', (data) => {
+    this.socket.on('chat', (data: any) => {
       console.log(`${data.from.name} : ${data.msg}`);
       this.updateMsg(data);
     });
@@ -30,7 +38,7 @@ class App extends Component {
     this.socket.emit("login", this.state.user);
   }
 
-  onChatInputChanged(e) {
+  onChatInputChanged(e: any) {
     this.setState({
       ...this.state,
       chatInput: e.target.value,
@@ -51,7 +59,7 @@ class App extends Component {
     });
   }
 
-  updateMsg(data) {
+  updateMsg(data: any) {
     this.setState({
       ...this.state,
       messages: [...this.state.messages, data],
