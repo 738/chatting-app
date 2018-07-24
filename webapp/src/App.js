@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Chance from 'chance';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      endpoint: "http://192.168.0.139:4001",
+      endpoint: "http://192.168.0.25:4001",
       messages: [],
       chatInput: "",
       user: {
@@ -59,15 +60,17 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <input id="chat-input" type="text" placeholder="chat..." value={this.state.chatInput} onChange={this.onChatInputChanged.bind(this)}/>
-        <input type="button" value="전송" onClick={this.sendChat.bind(this)}/>
-        {
-          this.state.messages.map((data, index) =>
-            <div key={index}>{data.from.name} : {data.msg}</div>
-          )
-        }
-      </div>
+      <MuiThemeProvider>
+        <div className="App">
+          <input id="chat-input" type="text" placeholder="chat..." value={this.state.chatInput} onChange={this.onChatInputChanged.bind(this)}/>
+          <input type="button" value="전송" onClick={this.sendChat.bind(this)}/>
+          {
+            this.state.messages.map((data, index) =>
+              <div key={index}>{data.from.name} : {data.msg}</div>
+            )
+          }
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
