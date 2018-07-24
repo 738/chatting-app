@@ -7,7 +7,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      endpoint: "http://192.168.0.25:4001",
+      endpoint: "http://192.168.219.161:4001",
       messages: [],
       chatInput: "",
       user: {
@@ -62,7 +62,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div className="App">
-          <input id="chat-input" type="text" placeholder="chat..." value={this.state.chatInput} onChange={this.onChatInputChanged.bind(this)}/>
+          <input id="chat-input" type="text" placeholder="Chat..." value={this.state.chatInput} onChange={this.onChatInputChanged.bind(this)}/>
           <input type="button" value="전송" onClick={this.sendChat.bind(this)}/>
           {
             this.state.messages.map((data, index) =>
